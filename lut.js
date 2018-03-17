@@ -24,9 +24,9 @@ const res = range(points)
         re: (phi === 0) ? Math.sin(Math.PI / 4) : Math.sin(phi),
         im: Math.cos(phi)
     }))
-    .map(cplx => ({
-        re: val2hex(cplx.re),
-        im: val2hex(cplx.im),
-    }));
+    .map(cplx =>
+        val2hex(cplx.im) + val2hex(cplx.re) + ' // ' + cplx.re + ' + j ' + cplx.im
+    )
+    .join('\n');
 
 console.log(res);

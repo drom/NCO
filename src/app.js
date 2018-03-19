@@ -6,9 +6,9 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const withParentSize = require('@vx/responsive').withParentSize;
 
-const table = lib.genTable(64, 2);
+const table = lib.genTable(8 * 256, 10);
 
-const data = range(100)
+const data = range(1000)
     .map(() => 1000 * Math.random())
     .map(phi => {
         const dut = table(phi);
@@ -22,8 +22,8 @@ const data = range(100)
         };
     })
     .map(datum => ({
-        re: 500 * datum.re,
-        im: 500 * datum.im
+        re: 50000 * datum.re,
+        im: 50000 * datum.im
     }))
     ;
 

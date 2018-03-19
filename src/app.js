@@ -54,7 +54,7 @@ const Demo1 = (config) => {
         $('svg', {width: size, height: size},
             $('defs', {},
                 $('style', {}, `
-.dot { stroke: none; fill: hsl(120, 0%, 50%, 20%); stroke-linecap: round; }
+.dot { stroke: none; fill: hsl(120, 0%, 0%, 10%); stroke-linecap: round; }
 `
                 )
             ),

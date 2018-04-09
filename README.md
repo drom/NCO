@@ -1,4 +1,4 @@
-Numerically controlled oscillator (NCO) in Verilog RTL
+[Numerically controlled oscillator](https://en.wikipedia.org/wiki/Numerically_controlled_oscillator) (NCO) in Verilog RTL
 
 Configurable hybrid implementation:
   * complex output {Im, Re}

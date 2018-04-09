@@ -4,7 +4,7 @@
   "description": "Numerically controlled oscillator (NCO) in Verilog RTL",
   "main": "index.js",
   "scripts": {
-    "test": "eslint *.js",
+    "test": "eslint *.js ; mocha test",
     "build": "browserify src/app.js > build/app.js",
     "start": "http-server -c5 build"
   },

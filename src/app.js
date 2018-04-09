@@ -1,50 +1,62 @@
 'use strict';
 
-const lib = require('../lib/');
-const range = require('lodash.range');
+// const range = require('lodash.range');
 const React = require('react');
 const ReactDOM = require('react-dom');
 const withParentSize = require('@vx/responsive').withParentSize;
 
-const table = lib.genTable(64, 2);
+const lib = require('../lib/');
 
-const data = range(100)
-    .map(() => 1000 * Math.random())
-    .map(phi => {
-        const dut = table(phi);
-        const err = {
-            re: Math.cos(phi) - dut.re,
-            im: Math.sin(phi) - dut.im
-        };
-        return {
-            re:  err.re * Math.cos(phi) + err.im * Math.sin(phi),
-            im: -err.re * Math.sin(phi) + err.im * Math.cos(phi)
-        };
-    })
-    .map(datum => ({
-        re: 500 * datum.re,
-        im: 500 * datum.im
-    }))
-    ;
+// const table = lib.genTable(64, 2);
+//
+// const data = range(100)
+//     .map(() => 1000 * Math.random())
+//     .map(phi => {
+//         const dut = table(phi);
+//         const err = {
+//             re: Math.cos(phi) - dut.re,
+//             im: Math.sin(phi) - dut.im
+//         };
+//         return {
+//             re:  err.re * Math.cos(phi) + err.im * Math.sin(phi),
+//             im: -err.re * Math.sin(phi) + err.im * Math.cos(phi)
+//         };
+//     })
+//     .map(datum => ({
+//         re: 500 * datum.re,
+//         im: 500 * datum.im
+//     }))
+//     ;
 
-    // .map(() => ({
-    //     re: 100 * (Math.random() + Math.random() + Math.random() - 1.5),
-    //     im: 100 * (Math.random() + Math.random() + Math.random() - 1.5)
-    // }));
+// .map(() => ({
+//     re: 100 * (Math.random() + Math.random() + Math.random() - 1.5),
+//     im: 100 * (Math.random() + Math.random() + Math.random() - 1.5)
+// }));
 
-const ranges = lib.getRanges(data);
+// const ranges = lib.getRanges(data);
 
-console.log(ranges);
+// console.log(ranges);
 
 const $ = React.createElement;
 
-const Scatter = lib.genScatter($);
+// const Scatter = lib.genScatter($);
 
 // grid -> Grid
 // axis -> Axis
 
-
 // const margin = { bottom: 40, top: 40, left: 40, right: 40 };
+
+const Box = (set, i) => {
+    const model = genModel(addrSize);
+
+    return $('rect', {key: i});
+};
+
+const Boxes = (props) => {
+    return $('g', {},
+        props.sets.map(Box)
+    );
+};
 
 const Demo1 = (config) => {
     const size = Math.ceil(Math.min(config.parentWidth, config.parentHeight));
@@ -61,11 +73,16 @@ const Demo1 = (config) => {
             $('rect', {
                 x: 0, y: 0,
                 width: size, height: size,
-                fill: '#fffad9',
+                fill: 'none',
                 rx: 8
             }),
             $('g', {transform: `translate(${ size / 2 },${ size / 2 })`},
-                $(Scatter, {data: data})
+                $(Boxes, {sets: [
+                    {addr: 2},
+                    {addr: 3},
+                    {addr: 4}
+                ]})
+                // $(Scatter, {data: data})
             )
         )
     );

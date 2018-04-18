@@ -23,8 +23,8 @@ class App extends React.Component {
             schema: {
                 type: 'object',
                 properties: {
-                    dataWidth: {type: 'number', minimum: 4, maximum: 31, title: 'LUT data width: '},
-                    addrWidth: {type: 'number', minimum: 1, maximum: 18, title: 'LUT address width: '},
+                    dataWidth: {type: 'number', minimum: 4, maximum: 31, title: 'I/Q LUT data width [bit] : 2 * '},
+                    addrWidth: {type: 'number', minimum: 1, maximum: 18, title: 'LUT address width [bit] : '},
                     nCordics:  {type: 'number', minimum: 0, maximum: 12, title: 'number of CORDIC stages: '}
                 }
             },

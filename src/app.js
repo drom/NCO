@@ -24,7 +24,7 @@ class App extends React.Component {
                 type: 'object',
                 properties: {
                     dataWidth: {type: 'number', minimum: 4, maximum: 31, title: 'LUT data width: '},
-                    addrWidth: {type: 'number', minimum: 1, maximum: 12, title: 'LUT address width: '},
+                    addrWidth: {type: 'number', minimum: 1, maximum: 18, title: 'LUT address width: '},
                     nCordics:  {type: 'number', minimum: 0, maximum: 12, title: 'number of CORDIC stages: '}
                 }
             },

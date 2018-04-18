@@ -25,7 +25,8 @@ class App extends React.Component {
                 properties: {
                     dataWidth: {type: 'number', minimum: 4, maximum: 31, title: 'I/Q LUT data width [bit] : 2 * '},
                     addrWidth: {type: 'number', minimum: 1, maximum: 18, title: 'LUT address width [bit] : '},
-                    nCordics:  {type: 'number', minimum: 0, maximum: 12, title: 'number of CORDIC stages: '}
+                    nCordics:  {type: 'number', minimum: 0, maximum: 12, title: 'number of CORDIC stages: '},
+                    corrector: {type: 'number', minimum: 1, maximum: 4,  title: 'CORDIC step correction: '}
                 }
             },
             path: [],
@@ -52,9 +53,10 @@ class App extends React.Component {
 
 ReactDOM.render(
     $(App, {data: {
-        dataWidth: 12,
-        addrWidth: 2,
-        nCordics: 0
+        dataWidth: 16,
+        addrWidth: 4,
+        nCordics: 0,
+        corrector: 2
     }}),
     document.getElementById('root')
 );

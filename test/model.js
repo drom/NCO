@@ -185,7 +185,7 @@ describe('Model', () => {
         ].map(props => {
             const addrSize = props[0];
             const nCordics = props[1];
-            const model = genModel(addrSize, 12, nCordics);
+            const model = genModel(addrSize, 12, nCordics, 2);
             const errors = Array(5000).fill(0).map((e, i) => {
                 const phase = randomPhase();
                 // const phase = (i << (32 - 3 - 2) >>> 0);

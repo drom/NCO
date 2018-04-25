@@ -1,76 +1,68 @@
 'use strict';
 
-const lib = require('../lib/');
-const range = require('lodash.range');
 const React = require('react');
 const ReactDOM = require('react-dom');
-const withParentSize = require('@vx/responsive').withParentSize;
-
-const table = lib.genTable(8 * 256, 10);
-
-const data = range(1000)
-    .map(() => 1000 * Math.random())
-    .map(phi => {
-        const dut = table(phi);
-        const err = {
-            re: Math.cos(phi) - dut.re,
-            im: Math.sin(phi) - dut.im
-        };
-        return {
-            re:  err.re * Math.cos(phi) + err.im * Math.sin(phi),
-            im: -err.re * Math.sin(phi) + err.im * Math.cos(phi)
-        };
-    })
-    .map(datum => ({
-        re: 50000 * datum.re,
-        im: 50000 * datum.im
-    }))
-    ;
-
-    // .map(() => ({
-    //     re: 100 * (Math.random() + Math.random() + Math.random() - 1.5),
-    //     im: 100 * (Math.random() + Math.random() + Math.random() - 1.5)
-    // }));
-
-const ranges = lib.getRanges(data);
-
-console.log(ranges);
+const update = require('immutability-helper');
+const resch = require('resch');
+const reGenChart = require('../lib/re-gen-chart');
+const reGenLogPlot = require('../lib/re-gen-logplot');
+const testbench = require('../lib/testbench');
 
 const $ = React.createElement;
+const desc = Object.assign({}, resch);
+const genForm = resch.__form(React)(desc);
+const Chart = reGenChart(React)({});
+const LogPlot = reGenLogPlot(React)({});
 
-const Scatter = lib.genScatter($);
+class App extends React.Component {
 
-// grid -> Grid
-// axis -> Axis
+    constructor(props) {
+        super(props);
+        this.state = {data: props.data};
+        this.updateState = this.updateState.bind(this);
 
+        this.Form = genForm({
+            schema: {
+                type: 'object',
+                properties: {
+                    dataWidth: {type: 'number', minimum: 4, maximum: 31, title: 'I/Q LUT data width [bit] : 2 * '},
+                    addrWidth: {type: 'number', minimum: 1, maximum: 18, title: 'LUT address width [bit] : '},
+                    nCordics:  {type: 'number', minimum: 0, maximum: 12, title: 'number of CORDIC stages: '},
+                    corrector: {type: 'number', minimum: 1, maximum: 4,  title: 'CORDIC step correction: '}
+                }
+            },
+            path: [],
+            updateState: this.updateState
+        });
+    }
 
-// const margin = { bottom: 40, top: 40, left: 40, right: 40 };
+    updateState (spec) {
+        this.setState(function (state) {
+            return update(state, spec);
+        });
+    }
 
-const Demo1 = (config) => {
-    const size = Math.ceil(Math.min(config.parentWidth, config.parentHeight));
-    // const r = (size - margin.left - margin.right) / 2;
-
-    return (
-        $('svg', {width: size, height: size},
-            $('defs', {},
-                $('style', {}, `
-.dot { stroke: none; fill: hsl(120, 0%, 0%, 10%); stroke-linecap: round; }
-`
-                )
-            ),
-            $('rect', {
-                x: 0, y: 0,
-                width: size, height: size,
-                fill: '#fffad9',
-                rx: 8
-            }),
-            $('g', {transform: `translate(${ size / 2 },${ size / 2 })`},
-                $(Scatter, {data: data})
+    render () {
+        const config = this.state.data;
+        const res = testbench(config);
+        return (
+            $('span', {},
+                $(this.Form, {data: config}),
+                $(Chart, {data: res.contours}),
+                $(LogPlot, {data: res.evms})
             )
-        )
-    );
-};
+        );
+    }
+}
 
-const Demo = withParentSize(Demo1);
+ReactDOM.render(
+    $(App, {data: {
+        dataWidth: 16,
+        addrWidth: 4,
+        nCordics: 0,
+        corrector: 2
+    }}),
+    document.getElementById('root')
+);
 
-ReactDOM.render($(Demo, {}), document.getElementById('root'));
+/* eslint-env browser */

@@ -1,4 +1,4 @@
-Numerically controlled oscillator (NCO) in Verilog RTL
+[Numerically controlled oscillator](https://en.wikipedia.org/wiki/Numerically_controlled_oscillator) (NCO) in Verilog RTL
 
 Configurable hybrid implementation:
   * complex output {Im, Re}
@@ -10,6 +10,7 @@ Configurable hybrid implementation:
 ## Parameters
   * WD : data width (per component)
   * SCALE : fixed point magnitude of the output signal
+  * WA0 : phase accumulator width
   * WA1 : Look-up table bits
   * WA2 : bits for the CORDIC stages
   * WA3 : bits for the Dynamic Rotation CORDIC

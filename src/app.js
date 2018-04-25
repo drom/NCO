@@ -6,6 +6,7 @@ const update = require('immutability-helper');
 const resch = require('resch');
 const reGenChart = require('../lib/re-gen-chart');
 const reGenLogPlot = require('../lib/re-gen-logplot');
+const reGenVerilog = require('../lib/re-gen-verilog');
 const testbench = require('../lib/testbench');
 
 const $ = React.createElement;
@@ -13,6 +14,7 @@ const desc = Object.assign({}, resch);
 const genForm = resch.__form(React)(desc);
 const Chart = reGenChart(React)({});
 const LogPlot = reGenLogPlot(React)({});
+const Verilog = reGenVerilog(React)({});
 
 class App extends React.Component {
 
@@ -48,6 +50,7 @@ class App extends React.Component {
         return (
             $('span', {},
                 $(this.Form, {data: config}),
+                $(Verilog, {data: config}),
                 $(Chart, {data: res.contours}),
                 $(LogPlot, {data: res.evms})
             )

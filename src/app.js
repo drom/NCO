@@ -50,7 +50,7 @@ class App extends React.Component {
         return (
             $('span', {},
                 $(this.Form, {data: config}),
-                $(Verilog, {data: config}),
+                $(Verilog, config),
                 $(Chart, {data: res.contours}),
                 $(LogPlot, {data: res.evms})
             )

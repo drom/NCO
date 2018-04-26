@@ -27,10 +27,11 @@ class App extends React.Component {
             schema: {
                 type: 'object',
                 properties: {
-                    dataWidth: {type: 'number', minimum: 4, maximum: 31, title: 'I/Q LUT data width [bit] : 2 * '},
-                    addrWidth: {type: 'number', minimum: 1, maximum: 18, title: 'LUT address width [bit] : '},
-                    nCordics:  {type: 'number', minimum: 0, maximum: 12, title: 'number of CORDIC stages: '},
-                    corrector: {type: 'number', minimum: 1, maximum: 4,  title: 'CORDIC step correction: '}
+                    dataWidth: {type: 'integer', minimum: 4, maximum: 30, title: 'I/Q LUT data width [bit] : 2 * '},
+                    addrWidth: {type: 'integer', minimum: 0, maximum: 18, title: 'LUT address width [bit] : '},
+                    nCordics:  {type: 'integer', minimum: 0, maximum: 12, title: 'number of CORDIC stages: '},
+                    corrector: {type: 'integer', minimum: -2, maximum: 2,  title: 'CORDIC step correction: '},
+                    scale:     {type: 'number', minimum: 0, maximum: 2,  title: 'scale correction: '}
                 }
             },
             path: [],
@@ -61,9 +62,10 @@ class App extends React.Component {
 ReactDOM.render(
     $(App, {data: {
         dataWidth: 16,
-        addrWidth: 4,
-        nCordics: 0,
-        corrector: 2
+        addrWidth: 10,
+        nCordics: 4,
+        corrector: 0,
+        scale: 1
     }}),
     document.getElementById('root')
 );

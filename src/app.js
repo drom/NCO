@@ -29,9 +29,10 @@ class App extends React.Component {
                 properties: {
                     dataWidth: {type: 'integer', minimum: 4, maximum: 30, title: 'I/Q LUT data width [bit] : 2 * '},
                     addrWidth: {type: 'integer', minimum: 0, maximum: 18, title: 'LUT address width [bit] : '},
-                    nCordics:  {type: 'integer', minimum: 0, maximum: 12, title: 'number of CORDIC stages: '},
-                    corrector: {type: 'integer', minimum: -2, maximum: 2,  title: 'CORDIC step correction: '},
-                    scale:     {type: 'number', minimum: 0, maximum: 2,  title: 'scale correction: '}
+                    betaWidth: {type: 'integer', minimum: 0, maximum: 32, title: 'Beta angle width [bit] : '},
+                    nCordics:  {type: 'integer', minimum: 0, maximum: 12, title: 'number of CORDIC stages : '},
+                    corrector: {type: 'integer', minimum: -2, maximum: 2,  title: 'CORDIC step correction : '},
+                    scale:     {type: 'number',  minimum: 0, maximum: 2,  title: 'scale correction : '}
                 }
             },
             path: [],
@@ -52,8 +53,8 @@ class App extends React.Component {
             $('span', {},
                 $(this.Form, {data: config}),
                 $(Verilog, config),
-                $(Chart, {data: res.contours}),
-                $(LogPlot, {data: res.evms})
+                $(LogPlot, {data: res.evms}),
+                $(Chart, {data: res.contours})
             )
         );
     }
@@ -63,9 +64,10 @@ ReactDOM.render(
     $(App, {data: {
         dataWidth: 16,
         addrWidth: 10,
+        betaWidth: 12,
         nCordics: 4,
         corrector: 0,
-        scale: 1
+        scale: 0.999999
     }}),
     document.getElementById('root')
 );

@@ -63,9 +63,9 @@ class App extends React.Component {
 ReactDOM.render(
     $(App, {data: {
         dataWidth: 16,
-        addrWidth: 10,
-        betaWidth: 12,
-        nCordics: 4,
+        addrWidth: 0,
+        betaWidth: 14,
+        nCordics: 8,
         corrector: 0,
         scale: 0.999999
     }}),

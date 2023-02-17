@@ -32,7 +32,8 @@ class App extends React.Component {
                     betaWidth: {type: 'integer', minimum: 0, maximum: 32, title: 'Beta angle width [bit] : '},
                     nCordics:  {type: 'integer', minimum: 0, maximum: 12, title: 'number of CORDIC stages : '},
                     corrector: {type: 'integer', minimum: -2, maximum: 2,  title: 'CORDIC step correction : '},
-                    scale:     {type: 'number',  minimum: 0, maximum: 2,  title: 'scale correction : '}
+                    scale:     {type: 'number',  minimum: 0, maximum: 2,  title: 'scale correction : '},
+                    top:       {type: 'string',                           title: 'top level name : '}
                 }
             },
             path: [],
@@ -63,11 +64,12 @@ class App extends React.Component {
 ReactDOM.render(
     $(App, {data: {
         dataWidth: 16,
-        addrWidth: 0,
-        betaWidth: 14,
-        nCordics: 8,
+        addrWidth: 4,
+        betaWidth: 16,
+        nCordics: 9,
         corrector: 0,
-        scale: 0.999999
+        scale: 0.999838,
+        top: 'nco'
     }}),
     document.getElementById('root')
 );

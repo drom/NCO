@@ -1,50 +1,50 @@
 'use strict';
 
-const genModel = require('../lib/model');
+const genModel = require('../lib/model.js');
 const onml = require('onml');
 const fs = require('fs-extra');
 const range = require('lodash.range');
 const d3Polygon = require('d3-polygon');
-const concaveHull = require('d3-geom-concavehull/src/concaveHull');
+// const concaveHull = require('d3-geom-concavehull/src/concaveHull');
 
 // console.log(d3Contour.contours);
 
 const hsl = idx => 'hsl(' + (idx * 77) % 360 + ', 100%, 40%)';
 
-const boxChart = (props) => {
-    const w = 1024;
-    const h = 1024;
-    return ['svg', {
-        xmlns: 'http://www.w3.org/2000/svg',
-        width: w + 1,
-        height: h + 1,
-        viewBox: [0, 0, w + 1, h + 1].join(' ')
-    },
-    ['g', {transform: 'translate(.5, .5)'}].concat([
-        ['rect', {
-            x: 0, y: 0, width: w, height: h,
-            fill: 'none', stroke: 'black'
-        }],
-        ['g', {'stroke-dasharray': '2,6'}].concat(range(32).map(i => ['line', {
-            stroke: '#aaa',
-            x1: 0, x2: w,
-            y1: 32 * i, y2: 32 * i
-        }])),
-        ['g', {'stroke-dasharray': '2,6'}].concat(range(32).map(i => ['line', {
-            stroke: '#aaa',
-            x1: 32 * i, x2: 32 * i,
-            y1: 0, y2: h
-        }])),
-        ['g', {}].concat(props.data.map((e, i) => ['rect', {
-            fill: 'none', stroke: hsl(i),
-            x: e.re.min + w / 2,
-            width: e.re.max - e.re.min,
-            y: e.im.min + h / 2,
-            height: e.im.max - e.im.min
-        }]))
-    ])
-    ];
-};
+// const boxChart = (props) => {
+//     const w = 1024;
+//     const h = 1024;
+//     return ['svg', {
+//         xmlns: 'http://www.w3.org/2000/svg',
+//         width: w + 1,
+//         height: h + 1,
+//         viewBox: [0, 0, w + 1, h + 1].join(' ')
+//     },
+//     ['g', {transform: 'translate(.5, .5)'}].concat([
+//         ['rect', {
+//             x: 0, y: 0, width: w, height: h,
+//             fill: 'none', stroke: 'black'
+//         }],
+//         ['g', {'stroke-dasharray': '2,6'}].concat(range(32).map(i => ['line', {
+//             stroke: '#aaa',
+//             x1: 0, x2: w,
+//             y1: 32 * i, y2: 32 * i
+//         }])),
+//         ['g', {'stroke-dasharray': '2,6'}].concat(range(32).map(i => ['line', {
+//             stroke: '#aaa',
+//             x1: 32 * i, x2: 32 * i,
+//             y1: 0, y2: h
+//         }])),
+//         ['g', {}].concat(props.data.map((e, i) => ['rect', {
+//             fill: 'none', stroke: hsl(i),
+//             x: e.re.min + w / 2,
+//             width: e.re.max - e.re.min,
+//             y: e.im.min + h / 2,
+//             height: e.im.max - e.im.min
+//         }]))
+//     ])
+//     ];
+// };
 
 const hullChart = (props) => {
     const w = 1024;
@@ -106,16 +106,16 @@ const errVectorRot = (ref, res) => ({
     im: -res.im * ref.re + res.re * ref.im
 });
 
-const errVector = (ref, res) => ({
-    re:  ref.re - res.re,
-    im:  ref.im - res.im
-});
+// const errVector = (ref, res) => ({
+//     re:  ref.re - res.re,
+//     im:  ref.im - res.im
+// });
 
-const cplxMag = cplx => Math.sqrt(Math.pow(cplx.re, 2) + Math.pow(cplx.im, 2));
+// const cplxMag = cplx => Math.sqrt(Math.pow(cplx.re, 2) + Math.pow(cplx.im, 2));
 
-const averageErr = arr => arr.reduce((prev, cur) => prev + cur, 0) / arr.length;
+// const averageErr = arr => arr.reduce((prev, cur) => prev + cur, 0) / arr.length;
 
-const averageMagErr = arr => averageErr(arr.map(cplxMag));
+// const averageMagErr = arr => averageErr(arr.map(cplxMag));
 
 const dbrange = 512;
 
@@ -131,22 +131,22 @@ const scaler1 = val => (val > 0) ? (dbrange + scaler(val)) : (-dbrange - scaler(
 
 // const scaler1 = val => (1 << 11) * val;
 
-const boxErr = arr => {
-    const box = {
-        re: {min: 0, max: 0},
-        im: {min: 0, max: 0}
-    };
-    arr.map(e => {
-        if (e.re > box.re.max) { box.re.max = e.re; }
-        if (e.re < box.re.min) { box.re.min = e.re; }
-        if (e.im > box.im.max) { box.im.max = e.im; }
-        if (e.im < box.im.min) { box.im.min = e.im; }
-    });
-    return {
-        re: {min: -dbrange - scaler(-box.re.min), max: dbrange + scaler(box.re.max)},
-        im: {min: -dbrange - scaler(-box.im.min), max: dbrange + scaler(box.im.max)}
-    };
-};
+// const boxErr = arr => {
+//     const box = {
+//         re: {min: 0, max: 0},
+//         im: {min: 0, max: 0}
+//     };
+//     arr.map(e => {
+//         if (e.re > box.re.max) { box.re.max = e.re; }
+//         if (e.re < box.re.min) { box.re.min = e.re; }
+//         if (e.im > box.im.max) { box.im.max = e.im; }
+//         if (e.im < box.im.min) { box.im.min = e.im; }
+//     });
+//     return {
+//         re: {min: -dbrange - scaler(-box.re.min), max: dbrange + scaler(box.re.max)},
+//         im: {min: -dbrange - scaler(-box.im.min), max: dbrange + scaler(box.im.max)}
+//     };
+// };
 
 const hullErr = arr => {
     // const cont = concaveHull()(arr.map(e => [e.re, e.im]));
@@ -186,7 +186,7 @@ describe('Model', () => {
             const addrSize = props[0];
             const nCordics = props[1];
             const model = genModel(addrSize, 12, nCordics, 2);
-            const errors = Array(5000).fill(0).map((e, i) => {
+            const errors = Array(5000).fill(0).map(() => {
                 const phase = randomPhase();
                 // const phase = (i << (32 - 3 - 2) >>> 0);
                 const res = model(phase);
@@ -204,3 +204,4 @@ describe('Model', () => {
         fs.outputFile('./box-chart.svg', onml.s(hullChart({data: ret})), () => {});
     });
 });
+/* eslint-env mocha */

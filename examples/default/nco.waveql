@@ -1,0 +1,11 @@
+TOP
+reset_n
+clk
+
+t_angle_req
+t_angle_ack
+t_angle_dat
+
+i_nco_req
+i_nco_ack
+i_nco_dat

@@ -2,6 +2,9 @@
 
 ### build
 
+```bash
+node ../../bin/nco.js --dataWidth 16 --addrWidth 4 --betaWidth 16 --nCordics 9 --corrector 0 --scale 0.999838 --top nco
+```
 ### run simulation
 
 ```bash

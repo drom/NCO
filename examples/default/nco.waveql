@@ -1,11 +1,11 @@
-TOP
+tb
 reset_n
 clk
 
 t_angle_req
 t_angle_ack
-t_angle_dat
+t_angle_dat %d
 
 i_nco_req
 i_nco_ack
-i_nco_dat
+i_nco_dat %d16
